@@ -1,8 +1,6 @@
 "
 I represent a neuron of a neural network.
 
-For the Responsibility part: Three sentences about my main responsibilities - what I do, what I know.
-
 A neuron receives a stimulus as input (feed method) and responds to that stimulus by producing as output value. The output obeys a very simple rule: if the sum of the weighted inputs is above a particular given value (bias), then the neuron fires 1; otherwise, it fires 0.
 
 Public API and Key Messages
