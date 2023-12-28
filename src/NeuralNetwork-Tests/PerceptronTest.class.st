@@ -96,3 +96,14 @@ PerceptronTest >> testSmallExample [
 	result := p feed: #(5 2).
 	self assert: result equals: 0.
 ]
+
+{ #category : #'instance creation' }
+PerceptronTest >> testWrongFeeding [
+	| p |
+	p := self newNeuron.
+	p weights: #(-1).
+	p bias: 0.5.
+	
+	self should: [ p feed: #(1 1) ] raise: Error.
+
+]
