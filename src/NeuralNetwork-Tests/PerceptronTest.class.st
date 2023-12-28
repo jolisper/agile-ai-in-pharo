@@ -5,6 +5,27 @@ Class {
 }
 
 { #category : #'instance creation' }
+PerceptronTest >> digitalComparator: inputs [
+	"Return an array of three elements with the result of comparing the first and second inputs elements: A > B, A = B, A < B"
+	| not and nor a b aGb aEb aLb notA notB |
+	a := inputs first.
+	b := inputs second.
+	
+	not := self newNeuron weights: #(-1); bias: 0.5.
+	and := self newNeuron weights: #(1 1); bias: -1.5.
+	nor := self newNeuron weights: #(-1 -1); bias: 0.5.
+
+	notA := not feed: { a }.
+	notB := not feed: { b }.
+	
+	aLb := and feed: { notA . b }.
+	aGb := and feed: { a . notB }.
+	aEb := nor feed: { aGb . aLb }.
+	
+	^ { aGb . aEb . aLb }
+]
+
+{ #category : #'instance creation' }
 PerceptronTest >> newNeuron [
 	"Return a new neuron"
 	^ Neuron new
@@ -21,6 +42,15 @@ PerceptronTest >> testAND [
 	self assert: (p feed: #(0 1)) equals: 0.
 	self assert: (p feed: #(1 0)) equals: 0.
 	self assert: (p feed: #(1 1)) equals: 1.
+]
+
+{ #category : #'instance creation' }
+PerceptronTest >> testDigitalComparator [
+
+	self assert: (self digitalComparator: #(0 0)) equals: #(0 1 0).
+	self assert: (self digitalComparator: #(1 0)) equals: #(1 0 0).
+	self assert: (self digitalComparator: #(0 1)) equals: #(0 0 1).
+	self assert: (self digitalComparator: #(1 1)) equals: #(0 1 0).
 ]
 
 { #category : #'instance creation' }
