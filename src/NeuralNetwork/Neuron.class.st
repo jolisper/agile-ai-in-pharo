@@ -45,6 +45,12 @@ Neuron >> feed: inputs [
 	^ z > 0 ifTrue: [ 1 ] ifFalse: [ 0 ].
 ]
 
+{ #category : #initialization }
+Neuron >> initialize [ 
+	super initialize.
+	learningRate := 0.1
+]
+
 { #category : #accessing }
 Neuron >> learningRate [
 	"Return the learning rate of the neuron."
