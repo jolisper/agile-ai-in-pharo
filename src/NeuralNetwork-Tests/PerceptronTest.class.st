@@ -212,6 +212,29 @@ PerceptronTest >> testTrainingOR [
 ]
 
 { #category : #'instance creation' }
+PerceptronTest >> testTrainingXOR [
+	| p result |
+	p := self newNeuron.
+	p weights: {-1 . -1}.
+	p bias: 2.
+	
+	1000 timesRepeat: [
+		p train: #(0 0) desiredOutput: 0.
+		p train: #(0 1) desiredOutput: 1.
+		p train: #(1 0) desiredOutput: 1.
+		p train: #(1 1) desiredOutput: 0.
+	].
+	
+	result :=
+		((p feed: #(0 0)) = 0) & 
+		((p feed: #(0 1)) = 1) &
+		((p feed: #(1 0)) = 1) &
+		((p feed: #(1 1)) = 0).
+	
+	self assert: result equals: false.
+]
+
+{ #category : #'instance creation' }
 PerceptronTest >> testWrongFeeding [
 	| p |
 	p := self newNeuron.
