@@ -52,7 +52,7 @@ Neuron >> initialize [
 	self sigmoid
 ]
 
-{ #category : #initalize }
+{ #category : #initialization }
 Neuron >> initializeWithWeights: aCollection bias: anInteger [ 
 	self initialize.
 	weigths := aCollection.
