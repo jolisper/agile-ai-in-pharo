@@ -27,6 +27,11 @@ Class {
 	#category : #NeuralNetwork
 }
 
+{ #category : #'instance creation' }
+Neuron class >> newWithWeights: aCollection bias: anInteger [ 
+	^ self new initializeWithWeights: aCollection bias: anInteger
+]
+
 { #category : #accessing }
 Neuron >> bias [
 	"Return the bias of the neuron."
@@ -51,6 +56,13 @@ Neuron >> initialize [
 	super initialize.
 	learningRate := 0.1.
 	self sigmoid
+]
+
+{ #category : #initalize }
+Neuron >> initializeWithWeights: aCollection bias: anInteger [ 
+	self initialize.
+	weigths := aCollection.
+	bias := anInteger.
 ]
 
 { #category : #accessing }
