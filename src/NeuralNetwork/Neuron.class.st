@@ -38,12 +38,6 @@ Neuron >> bias [
 	^ bias
 ]
 
-{ #category : #accessing }
-Neuron >> bias: aNumber [
-	"Set the bias of the neuron."
-	bias := aNumber
-]
-
 { #category : #actions }
 Neuron >> feed: inputs [
 	| z |
@@ -106,10 +100,4 @@ Neuron >> train: inputs desiredOutput: desiredOutput [
 Neuron >> weights [
 	"Return the weights of the neuron."
 	^ weigths
-]
-
-{ #category : #accessing }
-Neuron >> weights: someWeightsAsNumbers [
-	"Set the weights of the neuron. Takes a collection of numbers as argument."
-	weigths := someWeightsAsNumbers
 ]
