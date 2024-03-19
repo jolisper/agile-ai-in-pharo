@@ -11,9 +11,9 @@ PerceptronTest >> digitalComparator: inputs [
 	a := inputs first.
 	b := inputs second.
 	
-	not := self newNeuron weights: #(-1); bias: 0.5.
-	and := self newNeuron weights: #(1 1); bias: -1.5.
-	nor := self newNeuron weights: #(-1 -1); bias: 0.5.
+	not := self newNeuronWithWeights: #(-1) bias: 0.5.
+	and := self newNeuronWithWeights: #(1 1) bias: -1.5.
+	nor := self newNeuronWithWeights: #(-1 -1) bias: 0.5.
 
 	notA := not feed: { a }.
 	notB := not feed: { b }.
@@ -26,17 +26,15 @@ PerceptronTest >> digitalComparator: inputs [
 ]
 
 { #category : #'instance creation' }
-PerceptronTest >> newNeuron [
+PerceptronTest >> newNeuronWithWeights: aWeights bias: aBias [
 	"Return a new neuron"
-	^ Neuron new
+	^ Neuron newWithWeights: aWeights bias: aBias
 ]
 
 { #category : #'instance creation' }
 PerceptronTest >> testAND [
 	| p |
-	p := self newNeuron.
-	p weights: #(1 1).
-	p bias: -1.5.
+	p := self newNeuronWithWeights: #(1 1) bias: -1.5.
 	
 	self assert: (p feed: #(0 0)) equals: 0.
 	self assert: (p feed: #(0 1)) equals: 0.
@@ -56,9 +54,7 @@ PerceptronTest >> testDigitalComparator [
 { #category : #'instance creation' }
 PerceptronTest >> testMustReturnOne [
 	| p result |
-	p := self newNeuron.
-	p weights: #(2 3).
-	p bias: -12.
+	p := self newNeuronWithWeights: #(2 3) bias: -12.
 	result := p feed: #(2 3).
 	self assert: result equals: 1.
 
@@ -67,9 +63,7 @@ PerceptronTest >> testMustReturnOne [
 { #category : #'instance creation' }
 PerceptronTest >> testMustReturnZero [
 	| p result |
-	p := self newNeuron.
-	p weights: #(2 3).
-	p bias: -12.
+	p := self newNeuronWithWeights: #(2 3) bias: -12.
 	result := p feed: #(2 3).
 	self assert: result equals: 1.
 
@@ -78,9 +72,7 @@ PerceptronTest >> testMustReturnZero [
 { #category : #'instance creation' }
 PerceptronTest >> testNOR [
 	| p |
-	p := self newNeuron.
-	p weights: #(-1 -1).
-	p bias: 0.5.
+	p := self newNeuronWithWeights: #(-1 -1) bias: 0.5.
 	
 	self assert: (p feed: #(0 0)) equals: 1.
 	self assert: (p feed: #(0 1)) equals: 0.
@@ -91,9 +83,7 @@ PerceptronTest >> testNOR [
 { #category : #'instance creation' }
 PerceptronTest >> testNOT [
 	| p |
-	p := self newNeuron.
-	p weights: #(-1).
-	p bias: 0.5.
+	p := self newNeuronWithWeights: #(-1) bias: 0.5.
 	
 	self assert: (p feed: #(1)) equals: 0.
 	self assert: (p feed: #(0)) equals: 1.
@@ -103,9 +93,7 @@ PerceptronTest >> testNOT [
 { #category : #'instance creation' }
 PerceptronTest >> testOR [
 	| p |
-	p := self newNeuron.
-	p weights: #(1 1).
-	p bias: -0.5.
+	p := self newNeuronWithWeights: #(1 1) bias: -0.5.
 	
 	self assert: (p feed: #(0 0)) equals: 0.
 	self assert: (p feed: #(0 1)) equals: 1.
@@ -116,13 +104,11 @@ PerceptronTest >> testOR [
 { #category : #'instance creation' }
 PerceptronTest >> testSmallExample [
 	| p result |
-	p := self newNeuron.
-	p weights: #(1 2).
-	p bias: -2.
+	p := self newNeuronWithWeights: #(1 2) bias: -2.
 	result := p feed: #(5 2).
 	self assert: result equals: 1.
 	
-	p weights: #(-2 2).
+	p := self newNeuronWithWeights: #(-2 2) bias: -2.
 	result := p feed: #(5 2).
 	self assert: result equals: 0.
 ]
@@ -130,9 +116,7 @@ PerceptronTest >> testSmallExample [
 { #category : #'instance creation' }
 PerceptronTest >> testTrainingAND [
 	| p |
-	p := self newNeuron.
-	p weights: {-1 . -1}.
-	p bias: 2.
+	p := self newNeuronWithWeights: {-1 . -1} bias: 2.
 	
 	25 timesRepeat: [
 		p train: #(0 0) desiredOutput: 0.
@@ -156,9 +140,7 @@ PerceptronTest >> testTrainingAND [
 { #category : #'instance creation' }
 PerceptronTest >> testTrainingNOR [
 	| p |
-	p := self newNeuron.
-	p weights: {-1}.
-	p bias: 2.
+	p := self newNeuronWithWeights: {-1} bias: 2.
 	
 	5 timesRepeat: [ 
 		p train: #(0) desiredOutput: 1.
@@ -172,9 +154,7 @@ PerceptronTest >> testTrainingNOR [
 { #category : #'instance creation' }
 PerceptronTest >> testTrainingNOT [
 	| p |
-	p := self newNeuron.
-	p weights: {-1}.
-	p bias: 2.
+	p := self newNeuronWithWeights: {-1} bias: 2.
 	
 	5 timesRepeat: [ 
 		p train: #(0) desiredOutput: 1.
@@ -188,9 +168,7 @@ PerceptronTest >> testTrainingNOT [
 { #category : #'instance creation' }
 PerceptronTest >> testTrainingOR [
 	| p |
-	p := self newNeuron.
-	p weights: {-1 . -1}.
-	p bias: 2.
+	p := self newNeuronWithWeights: {-1 . -1} bias: 2.
 	
 	32 timesRepeat: [
 		p train: #(0 0) desiredOutput: 0.
@@ -214,9 +192,7 @@ PerceptronTest >> testTrainingOR [
 { #category : #'instance creation' }
 PerceptronTest >> testTrainingXOR [
 	| p result |
-	p := self newNeuron.
-	p weights: {-1 . -1}.
-	p bias: 2.
+	p := self newNeuronWithWeights: {-1 . -1} bias: 2.
 	
 	1000 timesRepeat: [
 		p train: #(0 0) desiredOutput: 0.
@@ -237,9 +213,7 @@ PerceptronTest >> testTrainingXOR [
 { #category : #'instance creation' }
 PerceptronTest >> testWrongFeeding [
 	| p |
-	p := self newNeuron.
-	p weights: #(-1).
-	p bias: 0.5.
+	p := self newNeuronWithWeights: #(-1) bias: 0.5.
 	
 	self should: [ p feed: #(1 1) ] raise: Error.
 
