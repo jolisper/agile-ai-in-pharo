@@ -28,8 +28,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-Neuron class >> newWithWeights: aCollection bias: anInteger [ 
-	^ self new initializeWithWeights: aCollection bias: anInteger
+Neuron class >> newWithWeights: aWeights bias: aBias [ 
+	^ self new initializeWithWeights: aWeights bias: aBias
 ]
 
 { #category : #accessing }
@@ -53,10 +53,10 @@ Neuron >> initialize [
 ]
 
 { #category : #initialization }
-Neuron >> initializeWithWeights: aCollection bias: anInteger [ 
+Neuron >> initializeWithWeights: aWeights bias: aBias [ 
 	self initialize.
-	weigths := aCollection.
-	bias := anInteger.
+	weigths := aWeights.
+	bias := aBias.
 ]
 
 { #category : #accessing }
