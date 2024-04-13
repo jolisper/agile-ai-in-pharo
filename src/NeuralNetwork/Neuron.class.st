@@ -66,9 +66,10 @@ Neuron >> learningRate [
 ]
 
 { #category : #accessing }
-Neuron >> learningRate: aNumber [
-	"Set the learning rate of the neuron."
-	learningRate := aNumber 
+Neuron >> learningRate: aLearningRateAsFloat [ 
+	"Set the learning rate of the neuron. The argument should be a small floating velue.
+	For example , 0.01"
+	learningRate := aLearningRateAsFloat
 ]
 
 { #category : #initialization }
