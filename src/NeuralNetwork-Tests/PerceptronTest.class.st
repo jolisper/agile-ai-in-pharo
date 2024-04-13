@@ -28,7 +28,7 @@ PerceptronTest >> digitalComparator: inputs [
 { #category : #'instance creation' }
 PerceptronTest >> newNeuronWithWeights: aWeights bias: aBias [
 	"Return a new neuron"
-	^ Neuron newWithWeights: aWeights bias: aBias
+	^ (Neuron newWithWeights: aWeights bias: aBias) step 
 ]
 
 { #category : #'instance creation' }
