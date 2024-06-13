@@ -19,7 +19,7 @@ Class {
 	#name : #Neuron,
 	#superclass : #Object,
 	#instVars : [
-		'weigths',
+		'weights',
 		'bias',
 		'learningRate',
 		'activationFunction'
@@ -38,10 +38,15 @@ Neuron >> bias [
 	^ bias
 ]
 
+{ #category : #accessors }
+Neuron >> bias: aBias [ 
+	bias := aBias
+]
+
 { #category : #actions }
 Neuron >> feed: inputs [
 	| z |
-	z := (inputs with: weigths collect: [:x :w | x * w ]) sum + bias.
+	z := (inputs with: weights collect: [ :x :w | x * w ]) sum + bias.
 	^ activationFunction eval: z
 ]
 
@@ -53,10 +58,10 @@ Neuron >> initialize [
 ]
 
 { #category : #initialization }
-Neuron >> initializeWithWeights: aWeights bias: aBias [ 
+Neuron >> initializeWithWeights: aWeights bias: aBias [
 	self initialize.
-	weigths := aWeights.
-	bias := aBias.
+	weights := aWeights.
+	bias := aBias
 ]
 
 { #category : #accessing }
@@ -90,15 +95,22 @@ Neuron >> train: inputs desiredOutput: desiredOutput [
 	output := self feed: inputs.
 	diff := desiredOutput - output.
 	delta := diff * (activationFunction derivative: output).
-	
-	inputs withIndexDo: [ :anInput :index |
-			weigths at: index put: ((weigths at: index) + (learningRate * delta * anInput)) ].
-	
+	inputs
+		withIndexDo: [ :anInput :index | 
+			weights
+				at: index
+				put: (weights at: index) + (learningRate * delta * anInput) ].
 	bias := bias + (learningRate * delta)
 ]
 
 { #category : #accessing }
 Neuron >> weights [
 	"Return the weights of the neuron."
-	^ weigths
+
+	^ weights
+]
+
+{ #category : #accesing }
+Neuron >> weights: aWeights [
+	weights := aWeights
 ]
