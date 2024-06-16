@@ -22,7 +22,9 @@ Class {
 		'weights',
 		'bias',
 		'learningRate',
-		'activationFunction'
+		'activationFunction',
+		'delta',
+		'output'
 	],
 	#category : #NeuralNetwork
 }
@@ -43,10 +45,17 @@ Neuron >> bias: aBias [
 	bias := aBias
 ]
 
+{ #category : #accessing }
+Neuron >> delta [ 
+"Return the delta value computed when propagating the error"
+^delta
+]
+
 { #category : #actions }
 Neuron >> feed: inputs [
 	| z |
 	z := (inputs with: weights collect: [ :x :w | x * w ]) sum + bias.
+	output := activationFunction eval: z.
 	^ activationFunction eval: z
 ]
 
@@ -75,6 +84,12 @@ Neuron >> learningRate: aLearningRateAsFloat [
 	"Set the learning rate of the neuron. The argument should be a small floating velue.
 	For example , 0.01"
 	learningRate := aLearningRateAsFloat
+]
+
+{ #category : #actions }
+Neuron >> output [
+"Return the output value, previous computed when doing a feed:"
+^ output 
 ]
 
 { #category : #initialization }
