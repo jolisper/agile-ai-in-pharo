@@ -34,6 +34,11 @@ Neuron class >> newWithWeights: aWeights bias: aBias [
 	^ self new initializeWithWeights: aWeights bias: aBias
 ]
 
+{ #category : #actions }
+Neuron >> adjustDeltaWith: anError [
+	delta := anError * (activationFunction derivative: output )
+]
+
 { #category : #accessing }
 Neuron >> bias [
 	"Return the bias of the neuron."

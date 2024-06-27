@@ -27,6 +27,13 @@ NNetwork >> addLayer: aNeuronLayer [
 	layers add: aNeuronLayer
 ]
 
+{ #category : #action }
+NNetwork >> backwardPropagateError: expectedOutputs [
+	"expectedOutputs corresponds to the outputs we are training the network agaist"
+	
+	self outputLayer backwardPropagateError: expectedOutputs 
+]
+
 { #category : #configuration }
 NNetwork >> configure: nbOfInputs hidden: nbOfNeurons1 hidden: nbOfNeurons2 nbOfOutputs: nbOfOutput [
 	"Configure the network with the given parameters.
@@ -99,4 +106,10 @@ layers do: [ :l | l learningRate: aLearningRate ]
 NNetwork >> numberOfOutputs [
 "Return the number of output of the network"
 ^ layers last numberOfNeurons 
+]
+
+{ #category : #accessing }
+NNetwork >> outputLayer [
+	"Return the output layer, which is also the last layer"
+	^ layers last
 ]

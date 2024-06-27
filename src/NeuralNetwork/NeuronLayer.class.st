@@ -14,6 +14,47 @@ Class {
 }
 
 { #category : #actions }
+NeuronLayer >> backwardPropagateError [
+	"This is a recursive method. The backpropagation begins with the 
+	output layer (i.e., the last layer)"
+
+	"We are in a hidden layer"
+
+	neurons
+		doWithIndex: [ :neuron :j | 
+			| theError |
+			theError := 0.0.
+			self nextLayer neurons
+				do:
+					[ :nextNeuron | theError := theError + ((nextNeuron weights at: j) * nextNeuron delta) ].
+			neuron adjustDeltaWith: theError ].
+		
+	"We iterate"
+	self previousLayer isNotNil
+		ifTrue: [ self previousLayer backwardPropagateError ]
+]
+
+{ #category : #actions }
+NeuronLayer >> backwardPropagateError: expected [
+	"This is a recursive method. The backpropagation beghins 
+	with the output layer (i.e.,the last layer)"
+
+	"We are in output layer"
+
+	neurons
+		with: expected
+		do: [ :neuron :exp | 
+			"We iterate"
+			| theError |
+			theError := exp - neuron output.
+			neuron adjustDeltaWith: theError ].
+
+	"We iterate"
+	self previousLayer isNotNil
+		ifTrue: [ self previousLayer backwardPropagateError ]
+]
+
+{ #category : #actions }
 NeuronLayer >> feed: someInputValues [
 	"Feed the neuron layer with some inputs"
 	
