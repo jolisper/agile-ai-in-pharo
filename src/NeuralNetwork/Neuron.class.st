@@ -72,7 +72,7 @@ Neuron >> feed: inputs [
 	| z |
 	z := (inputs with: weights collect: [ :x :w | x * w ]) sum + bias.
 	output := activationFunction eval: z.
-	^ activationFunction eval: z
+	^ output
 ]
 
 { #category : #initialization }
