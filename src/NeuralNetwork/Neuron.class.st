@@ -35,22 +35,33 @@ Neuron class >> newWithWeights: aWeights bias: aBias [
 ]
 
 { #category : #actions }
+Neuron >> adjustBias [
+	bias := bias + (learningRate * delta)
+]
+
+{ #category : #actions }
 Neuron >> adjustDeltaWith: anError [
 	delta := anError * (activationFunction derivative: output )
 ]
 
-{ #category : #accessing }
+{ #category : #actions }
+Neuron >> adjustWeightWithInput: inputs [
+	inputs withIndexDo: [ :anInput :index |
+		weights at: index put: ((weights at: index) + (learningRate * delta * anInput))]
+]
+
+{ #category : #accesing }
 Neuron >> bias [
 	"Return the bias of the neuron."
 	^ bias
 ]
 
-{ #category : #accessors }
+{ #category : #accesing }
 Neuron >> bias: aBias [ 
 	bias := aBias
 ]
 
-{ #category : #accessing }
+{ #category : #accesing }
 Neuron >> delta [ 
 "Return the delta value computed when propagating the error"
 ^delta
@@ -78,13 +89,13 @@ Neuron >> initializeWithWeights: aWeights bias: aBias [
 	bias := aBias
 ]
 
-{ #category : #accessing }
+{ #category : #accesing }
 Neuron >> learningRate [
 	"Return the learning rate of the neuron."
 	^ learningRate 
 ]
 
-{ #category : #accessing }
+{ #category : #accesing }
 Neuron >> learningRate: aLearningRateAsFloat [ 
 	"Set the learning rate of the neuron. The argument should be a small floating velue.
 	For example , 0.01"
@@ -111,7 +122,7 @@ Neuron >> step [
 
 { #category : #actions }
 Neuron >> train: inputs desiredOutput: desiredOutput [
-	| diff output delta |
+	| diff |
 	output := self feed: inputs.
 	diff := desiredOutput - output.
 	delta := diff * (activationFunction derivative: output).
@@ -123,7 +134,7 @@ Neuron >> train: inputs desiredOutput: desiredOutput [
 	bias := bias + (learningRate * delta)
 ]
 
-{ #category : #accessing }
+{ #category : #accesing }
 Neuron >> weights [
 	"Return the weights of the neuron."
 

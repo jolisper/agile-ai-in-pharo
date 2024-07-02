@@ -27,7 +27,7 @@ NNetwork >> addLayer: aNeuronLayer [
 	layers add: aNeuronLayer
 ]
 
-{ #category : #action }
+{ #category : #actions }
 NNetwork >> backwardPropagateError: expectedOutputs [
 	"expectedOutputs corresponds to the outputs we are training the network agaist"
 	
@@ -112,4 +112,19 @@ NNetwork >> numberOfOutputs [
 NNetwork >> outputLayer [
 	"Return the output layer, which is also the last layer"
 	^ layers last
+]
+
+{ #category : #actions }
+NNetwork >> train: someInputs desiredOutputs: desiredOutputs [
+	"Train the neural network with a set of inputs and some expected output"
+	self feed: someInputs.
+	self backwardPropagateError: desiredOutputs.
+	self updateWeight: someInputs  
+
+]
+
+{ #category : #actions }
+NNetwork >> updateWeight: initialInputs [
+	"Update the weights of the neurons using the initial inputs"
+	layers first updateWeight: initialInputs 
 ]
